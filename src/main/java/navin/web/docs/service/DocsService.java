@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import navin.web.docs.model.DocsData;
+import navin.web.docs.repository.DataRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pegdown.Extensions;
@@ -19,25 +21,18 @@ import navin.web.docs.repository.DocsRepository;
 public class DocsService {
 
 	private static final Log log = LogFactory.getLog(DocsService.class);
-	@Autowired
-	DocsRepository docsRepo;
 
-	public String markdownToHtmlConverter(String fileName, String filePath) throws IOException {
+	@Autowired
+	private DocsRepository docsRepo;
+
+	@Autowired
+	private DataRepository dataRepository;
+
+	public String markdownToHtmlConverter(String fileName){
 
 		PegDownProcessor pegdown = new PegDownProcessor(Extensions.ALL, Long.MAX_VALUE);
-		DataInputStream dis = new DataInputStream(new FileInputStream(filePath + "/" + fileName + ".md"));
-
-		byte[] markdownByte = null;
-		try {
-			markdownByte = new byte[dis.available()];
-			dis.readFully(markdownByte);
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-		} finally {
-			dis.close();
-		}
-
-		String markdownText = new String(markdownByte);
+		DocsData data = dataRepository.findByFileName(fileName);
+		String markdownText = data.getContent();
 		return pegdown.markdownToHtml(markdownText);
 	}
 	

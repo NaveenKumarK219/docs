@@ -20,11 +20,10 @@ import navin.web.docs.service.DocsService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin()
 public class DocsRestController {
 
 	private static final Log log = LogFactory.getLog(DocsRestController.class);
-	private static final String FOLDER_PATH = System.getenv("HOME")+"/docs";
 	
 	@Autowired
 	DocsService docsService;
@@ -40,7 +39,7 @@ public class DocsRestController {
 	public String home(HttpSession session) throws IOException{
 		log.info("~~~~~~~~~~~Docs Welcome Page~~~~~~~~~~~");
 		
-		String docFileContent = docsService.markdownToHtmlConverter("welcomePage", session.getServletContext().getRealPath("WEB-INF/classes/static/init"));
+		String docFileContent = docsService.markdownToHtmlConverter("welcomePage");
 		
 		return docFileContent;
 
@@ -49,6 +48,6 @@ public class DocsRestController {
 	@GetMapping("/{title}")
 	public String getDocOnTitle(@PathVariable("title")String title) throws IOException {
 		log.info("~~~~~~~~~Get Doc : " + title);
-		return docsService.markdownToHtmlConverter(title, FOLDER_PATH);
+		return docsService.markdownToHtmlConverter(title);
 	}
 }
