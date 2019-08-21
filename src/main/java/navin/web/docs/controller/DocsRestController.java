@@ -35,7 +35,7 @@ public class DocsRestController {
 		
 	}
 	
-	@GetMapping("/welcome-page")
+	/*@GetMapping("/welcome-page")
 	public String home(HttpSession session) throws IOException{
 		log.info("~~~~~~~~~~~Docs Welcome Page~~~~~~~~~~~");
 		
@@ -43,11 +43,11 @@ public class DocsRestController {
 		
 		return docFileContent;
 
-	}
+	}*/
 	
-	@GetMapping("/{title}")
-	public String getDocOnTitle(@PathVariable("title")String title) throws IOException {
-		log.info("~~~~~~~~~Get Doc : " + title);
-		return docsService.markdownToHtmlConverter(title);
+	@GetMapping("/{fileName}")
+	public String getDocOnTitle(@PathVariable("fileName")String fileName) throws IOException {
+		log.info("~~~~~~~~~Get Doc : " + fileName);
+		return docsService.getDocContentOnFileName(fileName);
 	}
 }

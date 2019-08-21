@@ -39,4 +39,9 @@ public class DocsService {
 	public List<MenuDetails> getMenuDetails(){
 		return docsRepo.getMenuDetails();
 	}
+
+	public String getDocContentOnFileName(String fileName){
+		DocsData data = dataRepository.findByFileName(fileName);
+		return data != null? data.getContent() : null;
+	}
 }
