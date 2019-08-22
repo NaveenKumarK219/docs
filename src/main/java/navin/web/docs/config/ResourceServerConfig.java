@@ -24,6 +24,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/users/**").access("hasRole('EDITOR')")
 			.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());*/
-		http.antMatcher("/**").authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests()
+			.antMatchers("/api/**").permitAll()
+			.anyRequest().authenticated();
 	}
 }
