@@ -1,5 +1,6 @@
 package navin.web.docs.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class UserInfoService {
 	public List<UserInfo> getAllActiveUsers(){
 		return usersRepository.findAllByActive(true);
 	}
+
+	public List<UserInfo> getAllUsers(){
+		return usersRepository.findAll();
+	}
 	
 	public UserInfo getUserInfoById(int id) {
 		return usersRepository.findById(id);
@@ -40,6 +45,18 @@ public class UserInfoService {
 	
 	public void deleteUser(int id) {
 		usersRepository.deleteById(id);
+	}
+
+	public UserInfo blockUser(int id){
+		UserInfo userInfo = usersRepository.findById(id);
+		userInfo.setActive(false);
+		return usersRepository.save(userInfo);
+	}
+
+	public UserInfo unBlockUser(int id){
+		UserInfo userInfo = usersRepository.findById(id);
+		userInfo.setActive(true);
+		return usersRepository.save(userInfo);
 	}
 
 }

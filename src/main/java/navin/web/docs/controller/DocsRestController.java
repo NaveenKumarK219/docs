@@ -20,7 +20,7 @@ import navin.web.docs.service.DocsService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin()
+@CrossOrigin("*")
 public class DocsRestController {
 
 	private static final Log log = LogFactory.getLog(DocsRestController.class);

@@ -15,6 +15,8 @@ public interface UserInfoRepository extends CrudRepository<UserInfo, String>{
 	public UserInfo findByEmailAndActive(String email, boolean active);
 	
 	public List<UserInfo> findAllByActive(boolean active);
+
+	public List<UserInfo> findAll();
 	
 	public UserInfo findById(int id);
 	
