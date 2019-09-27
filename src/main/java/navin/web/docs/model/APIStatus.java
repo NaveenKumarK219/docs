@@ -6,10 +6,11 @@ public class APIStatus {
 
     private String apiName;
     private String status;
+    private Object data;
     private String errorMessage;
     private Date startTime;
     private Date endTime;
-    private long executionTime;
+    private String executionTime;
 
     public String getApiName() {
         return apiName;
@@ -19,7 +20,15 @@ public class APIStatus {
         this.apiName = apiName;
     }
 
-    public String getStatus() {
+    public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	public String getStatus() {
         return status;
     }
 
@@ -43,11 +52,11 @@ public class APIStatus {
         this.endTime = endTime;
     }
 
-    public long getExecutionTime() {
+    public String getExecutionTime() {
         return executionTime;
     }
 
-    public void setExecutionTime(long executionTime) {
+    public void setExecutionTime(String executionTime) {
         this.executionTime = executionTime;
     }
 
@@ -57,5 +66,32 @@ public class APIStatus {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+    
+    public static APIStatus initApiStatus(String apiName){
+        APIStatus apiStatus = new APIStatus();
+        apiStatus.setApiName(apiName);
+        apiStatus.setStartTime(new Date());
+        apiStatus.setStatus("Started");
+        return apiStatus;
+     }
+
+     public static APIStatus closeApiStatus(APIStatus  apiStatus){
+         apiStatus.setEndTime(new Date());
+         apiStatus.setExecutionTime((apiStatus.getEndTime().getTime() - apiStatus.getStartTime().getTime()) + "ms");
+         return apiStatus;
+     }
+     
+     @Override
+    public String toString() {
+    	return "{"
+    			+ "apiName: "+ apiName +","
+    		    + "data: "+ data + ","
+    		    + "status: "+ status +","
+    		    + "errorMessage: "+ errorMessage +","
+    		    + "startTime: "+ startTime +","
+    		    + "endTime: "+ endTime +","
+    		    + "executionTime: "+ executionTime +","
+    			+ "}";
     }
 }
